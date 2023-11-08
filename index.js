@@ -1,1 +1,1 @@
-const add = (x, y) => x + y + 3 + 4 + 1 + 1 + 3 + 1 + 9 + 3 + 12 + 12
+const add = (x, y) => x + y + 1
