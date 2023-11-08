@@ -23,6 +23,7 @@ jobs:
               - server/**
             web:
               - ./**
+              - '!.github/**'
               - '!server/**'
 
       - name: Run step if web file(s) change
