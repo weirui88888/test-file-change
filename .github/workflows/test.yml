@@ -29,6 +29,7 @@ jobs:
         if: steps.changed-files-yaml.outputs.web_any_changed == 'true'
         run: |
           echo "One or more web file(s) has changed."
+          echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.web_added_files }}"
           echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.web_all_changed_files }}"
           echo "List all the files that have modified: ${{ steps.changed-files-yaml.outputs.web_all_modified_files }}"
           echo "List all the files that have deleted: ${{ steps.changed-files-yaml.outputs.web_all_deleted_files }}"
@@ -37,6 +38,7 @@ jobs:
         if: steps.changed-files-yaml.outputs.server_any_changed == 'true'
         run: |
           echo "One or more server file(s) has changed."
+          echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.server_added_files }}"
           echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.server_all_changed_files }}"
           echo "List all the files that have modified: ${{ steps.changed-files-yaml.outputs.server_all_modified_files }}"
           echo "List all the files that have deleted: ${{ steps.changed-files-yaml.outputs.server_all_deleted_files }}"
