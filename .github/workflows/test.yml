@@ -74,7 +74,11 @@ jobs:
     runs-on: ubuntu-latest # windows-latest || macos-latest
     steps:
       - name: Get all test, doc and src files that have changed
-        run: echo "your web files has changed,should deploy-web"
+        run: |
+          echo "your web files has changed,should deploy-web"
+          echo ${{needs.check-changed-files.outputs.shouldDeployAll}}
+          echo ${{needs.check-changed-files.outputs.shouldDeployWeb}} 
+          echo ${{needs.check-changed-files.outputs.shouldDeployServer}}
 
   deploy-server:
     name: deploy-server
@@ -83,4 +87,8 @@ jobs:
     runs-on: ubuntu-latest # windows-latest || macos-latest
     steps:
       - name: Get all test, doc and src files that have changed
-        run: echo "your web files has changed,should deploy-server"
+        run: |
+          echo "your web files has changed,should deploy-server"
+          echo ${{needs.check-changed-files.outputs.shouldDeployAll}}
+          echo ${{needs.check-changed-files.outputs.shouldDeployWeb}} 
+          echo ${{needs.check-changed-files.outputs.shouldDeployServer}}
