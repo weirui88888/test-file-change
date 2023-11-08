@@ -33,18 +33,6 @@ jobs:
               - '!.github/**'
               - '!server/**'
 
-      # - name: Run step if web file(s) change
-      #   if: ${{steps.changed-files-yaml.outputs.web_any_changed == 'true'}}
-      #   run: |
-      #     echo "One or more web file(s) has changed."
-      #     echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.web_added_files }}"
-
-      # - name: Run step if server file(s) change
-      #   if: ${{steps.changed-files-yaml.outputs.server_any_changed == 'true'}}
-      #   run: |
-      #     echo "One or more server file(s) has changed."
-      #     echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.server_added_files }}"
-
   deploy-web:
     name: deploy-web
     needs: check-changed-files
