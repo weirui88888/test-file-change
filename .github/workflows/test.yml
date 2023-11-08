@@ -62,7 +62,10 @@ jobs:
     runs-on: ubuntu-latest # windows-latest || macos-latest
     steps:
       - name: view shouldDeployAll values
-        run: echo ${{needs.check-changed-files.outputs.shouldDeployAll}}
+        run: |
+          echo ${{needs.check-changed-files.outputs.shouldDeployAll}}
+          echo ${{needs.check-changed-files.outputs.shouldDeployWeb}}
+          echo ${{needs.check-changed-files.outputs.shouldDeployServer}}
 
   deploy-web:
     name: deploy-web
