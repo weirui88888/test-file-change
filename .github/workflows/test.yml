@@ -70,7 +70,7 @@ jobs:
   deploy-web:
     name: deploy-web
     needs: check-changed-files
-    if: ${{needs.check-changed-files.outputs.shouldDeployWeb == 'true' || needs.check-changed-files.outputs.shouldDeployAll == 'true'}}
+    if: ${{ (needs.check-changed-files.outputs.shouldDeployWeb == 'true') || (needs.check-changed-files.outputs.shouldDeployAll == 'true') }}
     runs-on: ubuntu-latest # windows-latest || macos-latest
     steps:
       - name: Get all test, doc and src files that have changed
@@ -83,7 +83,7 @@ jobs:
   deploy-server:
     name: deploy-server
     needs: check-changed-files
-    if: ${{needs.check-changed-files.outputs.shouldDeployServer == 'true'}} || ${{ needs.check-changed-files.outputs.shouldDeployAll == 'true'}}
+    if: ${{ (needs.check-changed-files.outputs.shouldDeployServer == 'true') || (needs.check-changed-files.outputs.shouldDeployAll == 'true') }}
     runs-on: ubuntu-latest # windows-latest || macos-latest
     steps:
       - name: Get all test, doc and src files that have changed
