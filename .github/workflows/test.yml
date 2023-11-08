@@ -10,8 +10,9 @@ jobs:
     runs-on: ubuntu-latest # windows-latest || macos-latest
     name: check-changed-files
     outputs:
-      shouldDeployWeb: ${{steps.changed-files-yaml.outputs.web_any_changed }}
-      shouldDeployServer: ${{steps.changed-files-yaml.outputs.server_any_changed }}
+      shouldDeployWeb: steps.changed-files-yaml.outputs.web_any_changed
+      shouldDeployServer: steps.changed-files-yaml.outputs.server_any_changed
+      shouldDeployAll: steps.changed-files-yaml.outputs.action_any_changed
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,6 +23,8 @@ jobs:
         uses: tj-actions/changed-files@v40
         with:
           files_yaml: |
+            action:
+              - '.github/**'
             server:
               - server/**
             web:
@@ -50,7 +53,7 @@ jobs:
   deploy-web:
     name: deploy-web
     needs: check-changed-files
-    if: needs.check-changed-files.outputs.shouldDeployWeb == 'true'
+    if: needs.check-changed-files.outputs.shouldDeployWeb == 'true' || needs.check-changed-files.outputs.shouldDeployAll == 'true'
     runs-on: ubuntu-latest # windows-latest || macos-latest
     steps:
       - name: Get all test, doc and src files that have changed
@@ -59,7 +62,7 @@ jobs:
   deploy-server:
     name: deploy-server
     needs: check-changed-files
-    if: needs.check-changed-files.outputs.shouldDeployServer == 'true'
+    if: needs.check-changed-files.outputs.shouldDeployServer == 'true' || needs.check-changed-files.outputs.shouldDeployAll == 'true'
     runs-on: ubuntu-latest # windows-latest || macos-latest
     steps:
       - name: Get all test, doc and src files that have changed
