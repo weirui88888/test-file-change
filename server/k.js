@@ -1,1 +1,1 @@
-console.log('k.js1')
+console.log('k.js2')
