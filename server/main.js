@@ -1,1 +1,1 @@
-const minus = (x, y) => x - y - 2
+const minus = (x, y) => x - y - 3
