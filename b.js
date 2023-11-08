@@ -1,1 +1,1 @@
-const adb = () => console.log('add b1.js')
+const adb = () => console.log('add b1.js1')

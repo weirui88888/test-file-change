@@ -51,9 +51,6 @@ jobs:
     if: ${{ (needs.check-changed-files.outputs.shouldDeployServer == 'true') || (needs.check-changed-files.outputs.shouldDeployAll == 'true') }}
     runs-on: ubuntu-latest # windows-latest || macos-latest
     steps:
-      - name: Get all test, doc and src files that have changed
-        run: |
-          echo "your web files has changed,should deploy-server"
       - name: View Changed Server Files Name
         if: ${{ needs.check-changed-files.outputs.shouldDeployServer == 'true' }}
         run: |
