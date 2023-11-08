@@ -47,7 +47,7 @@ jobs:
         if: ${{ needs.check-changed-files.outputs.shouldDeployWeb == 'true' }}
         run: |
           echo "List all the web files that have changed: ${{ needs.check-changed-files.outputs.webChangedFiles }}"
-          echo $LatestCommitMessage
+          echo ${{env.LatestCommitMessage}}
 
   deploy-server:
     name: deploy-server
@@ -59,4 +59,4 @@ jobs:
         if: ${{ needs.check-changed-files.outputs.shouldDeployServer == 'true' }}
         run: |
           echo "List all the server files that have changed: ${{ needs.check-changed-files.outputs.serverChangedFiles }}"
-          echo $LatestCommitMessage
+          echo ${{env.LatestCommitMessage}}
