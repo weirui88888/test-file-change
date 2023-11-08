@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest # windows-latest || macos-latest
     name: check-changed-files
     outputs:
-      shouldDeployWeb: steps.changed-files-yaml.outputs.web_any_changed
-      shouldDeployServer: steps.changed-files-yaml.outputs.server_any_changed
-      shouldDeployAll: steps.changed-files-yaml.outputs.action_any_changed
+      shouldDeployWeb: ${{steps.changed-files-yaml.outputs.web_any_changed}}
+      shouldDeployServer: ${{steps.changed-files-yaml.outputs.server_any_changed}}
+      shouldDeployAll: ${{steps.changed-files-yaml.outputs.action_any_changed}}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,12 +34,12 @@ jobs:
 
       - name: View shouldDeployAll
         run: |
-          echo "web_any_changed:${{steps.changed-files-yaml.outputs.web_any_changed}}"
-          echo "server_any_changed:${{steps.changed-files-yaml.outputs.server_any_changed}}"
-          echo "action_any_changed:${{steps.changed-files-yaml.outputs.action_any_changed}}"
+          echo "web_any_changed: ${{steps.changed-files-yaml.outputs.web_any_changed}}"
+          echo "server_any_changed: ${{steps.changed-files-yaml.outputs.server_any_changed}}"
+          echo "action_any_changed: ${{steps.changed-files-yaml.outputs.action_any_changed}}"
 
       - name: Run step if web file(s) change
-        if: steps.changed-files-yaml.outputs.web_any_changed == 'true'
+        if: ${{steps.changed-files-yaml.outputs.web_any_changed == 'true'}}
         run: |
           echo "One or more web file(s) has changed."
           echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.web_added_files }}"
@@ -48,7 +48,7 @@ jobs:
           echo "List all the files that have deleted: ${{ steps.changed-files-yaml.outputs.web_all_deleted_files }}"
 
       - name: Run step if server file(s) change
-        if: steps.changed-files-yaml.outputs.server_any_changed == 'true'
+        if: ${{steps.changed-files-yaml.outputs.server_any_changed == 'true'}}
         run: |
           echo "One or more server file(s) has changed."
           echo "List all the files that have changed: ${{ steps.changed-files-yaml.outputs.server_added_files }}"
@@ -63,14 +63,14 @@ jobs:
     steps:
       - name: view shouldDeployAll values
         run: |
-          echo ${{needs.check-changed-files.outputs.shouldDeployAll}} == 'true'
-          echo ${{needs.check-changed-files.outputs.shouldDeployWeb}} == 'true'
-          echo ${{needs.check-changed-files.outputs.shouldDeployServer}} == 'true'
+          echo ${{needs.check-changed-files.outputs.shouldDeployAll}}
+          echo ${{needs.check-changed-files.outputs.shouldDeployWeb}} 
+          echo ${{needs.check-changed-files.outputs.shouldDeployServer}}
 
   deploy-web:
     name: deploy-web
     needs: check-changed-files
-    if: needs.check-changed-files.outputs.shouldDeployWeb == 'true' || needs.check-changed-files.outputs.shouldDeployAll == 'true'
+    if: ${{needs.check-changed-files.outputs.shouldDeployWeb == 'true'}} || ${{needs.check-changed-files.outputs.shouldDeployAll == 'true'}}
     runs-on: ubuntu-latest # windows-latest || macos-latest
     steps:
       - name: Get all test, doc and src files that have changed
@@ -79,7 +79,7 @@ jobs:
   deploy-server:
     name: deploy-server
     needs: check-changed-files
-    if: needs.check-changed-files.outputs.shouldDeployServer == 'true' || needs.check-changed-files.outputs.shouldDeployAll == 'true'
+    if: ${{needs.check-changed-files.outputs.shouldDeployServer == 'true'}} || ${{needs.check-changed-files.outputs.shouldDeployAll == 'true'}}
     runs-on: ubuntu-latest # windows-latest || macos-latest
     steps:
       - name: Get all test, doc and src files that have changed
