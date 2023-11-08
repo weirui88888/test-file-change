@@ -24,7 +24,7 @@ jobs:
         with:
           files_yaml: |
             action:
-              - '.github/**'
+              - '.github/workflows/**'
             server:
               - server/**
             web:
