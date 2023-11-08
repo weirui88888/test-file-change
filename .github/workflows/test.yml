@@ -32,6 +32,12 @@ jobs:
               - '!.github/**'
               - '!server/**'
 
+      - name: View shouldDeployAll
+        run: |
+          echo "web_any_changed:${{steps.changed-files-yaml.outputs.web_any_changed}}"
+          echo "server_any_changed:${{steps.changed-files-yaml.outputs.server_any_changed}}"
+          echo "action_any_changed:${{steps.changed-files-yaml.outputs.action_any_changed}}"
+
       - name: Run step if web file(s) change
         if: steps.changed-files-yaml.outputs.web_any_changed == 'true'
         run: |
