@@ -15,11 +15,16 @@ jobs:
       shouldDeployAll: ${{steps.changed-files-yaml.outputs.action_any_changed}}
       webChangedFiles: ${{steps.changed-files-yaml.outputs.web_all_changed_and_modified_files}}
       serverChangedFiles: ${{steps.changed-files-yaml.outputs.server_all_changed_and_modified_files}}
-      LatestCommitMessage: $(git log --format=%B -n 1 ${{ github.sha }})
+      LatestCommitMessage: ${{steps.getLatestCommitMessage.outputs.LatestCommitMessage }}
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # OR "2" -> To retrieve the preceding commit.
+          fetch-depth: 0
+
+      - name: Get Latest Commit Message
+        id: getLatestCommitMessage
+        run: |
+          echo "LatestCommitMessage=$(git log --format=%B -n 1 ${{ github.sha }})" >> $GITHUB_OUTPUT
 
       - name: Get changed files
         id: changed-files-yaml
