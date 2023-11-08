@@ -22,7 +22,7 @@ jobs:
             server:
               - server/**
             web:
-              - */**
+              - ./**
               - '!server/**'
 
       - name: Run step if web file(s) change
