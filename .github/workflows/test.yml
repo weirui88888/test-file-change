@@ -34,9 +34,9 @@ jobs:
 
       - name: View shouldDeployAll
         run: |
+          echo "action_any_changed: ${{steps.changed-files-yaml.outputs.action_any_changed}}"
           echo "web_any_changed: ${{steps.changed-files-yaml.outputs.web_any_changed}}"
           echo "server_any_changed: ${{steps.changed-files-yaml.outputs.server_any_changed}}"
-          echo "action_any_changed: ${{steps.changed-files-yaml.outputs.action_any_changed}}"
 
       - name: Run step if web file(s) change
         if: ${{steps.changed-files-yaml.outputs.web_any_changed == 'true'}}
@@ -79,7 +79,7 @@ jobs:
   deploy-server:
     name: deploy-server
     needs: check-changed-files
-    if: ${{needs.check-changed-files.outputs.shouldDeployServer == 'true' || needs.check-changed-files.outputs.shouldDeployAll == 'true'}}
+    if: ${{needs.check-changed-files.outputs.shouldDeployServer == 'true'}} || ${{ needs.check-changed-files.outputs.shouldDeployAll == 'true'}}
     runs-on: ubuntu-latest # windows-latest || macos-latest
     steps:
       - name: Get all test, doc and src files that have changed
