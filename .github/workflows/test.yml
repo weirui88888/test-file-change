@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  LatestCommitMessage: $(git log --format=%B -n 1 ${{ github.sha }})
+
 jobs:
   check-changed-files:
     runs-on: ubuntu-latest # windows-latest || macos-latest
@@ -20,7 +23,7 @@ jobs:
         with:
           fetch-depth: 0 # OR "2" -> To retrieve the preceding commit.
 
-      - name: Get all test, doc and src files that have changed
+      - name: Get changed files
         id: changed-files-yaml
         uses: tj-actions/changed-files@v40
         with:
@@ -44,6 +47,7 @@ jobs:
         if: ${{ needs.check-changed-files.outputs.shouldDeployWeb == 'true' }}
         run: |
           echo "List all the web files that have changed: ${{ needs.check-changed-files.outputs.webChangedFiles }}"
+          echo $LatestCommitMessage
 
   deploy-server:
     name: deploy-server
@@ -55,3 +59,4 @@ jobs:
         if: ${{ needs.check-changed-files.outputs.shouldDeployServer == 'true' }}
         run: |
           echo "List all the server files that have changed: ${{ needs.check-changed-files.outputs.serverChangedFiles }}"
+          echo $LatestCommitMessage
